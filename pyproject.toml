@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hexlet-code"
+version = "0.1.0"
+description = "Второй учебный проект в курсе Хекслета. Вычисляет различия между двумя конфигурационными файлами."
+authors = ["Parrot7325 <maximus1997@yahoo.com>"]
+readme = "README.md"
+packages = [
+#  {include = "hexlet_code"},
+   {include = "gendiff"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+gendiff = "gendiff.starters.gendiff:main"
