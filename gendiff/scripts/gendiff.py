@@ -7,5 +7,7 @@ def arguments():
                             metavar='first_file second_file',
                             type=str,
                             help='')
+    my_parser.add_argument('-f', '--format',
+                           help='set format of output' )
     args = my_parser.parse_args()
     print(args.Help)
