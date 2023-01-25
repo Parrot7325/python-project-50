@@ -1,8 +1,9 @@
-from gendiff.scripts.gendiff import arguments
+from gendiff.scripts import gendiff
 
 
 def main():
-    arguments()
+    args = gendiff.arguments()
+    print(gendiff.generate_diff(args.first_file, args.second_file))
 
 
 if __name__ == '__main__':
