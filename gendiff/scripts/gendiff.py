@@ -11,12 +11,7 @@ def arguments():
     my_parser.add_argument('-f', '--format',
                            help='set format of output' )
     args = my_parser.parse_args()
-
-def get_existent(value1, value2):
-    if value1:
-        return value1
-    else:
-        return value2
+    return args
 
 
 def generate_diff(file_path1, file_path2):
@@ -28,11 +23,12 @@ def generate_diff(file_path1, file_path2):
         if file1.get(key) == file2.get(key):
             result += f'    {key}: {file1.get(key)}\n'
         else:
-            if not file1.get(key) or not file2.get(key):
-                value = get_existent(file1.get(key), file2.get(key))
-                result += f'  - {key}: {value}\n'
-            else:
+            if key in file1.keys() and key not in file2.keys():
+                result += f'  - {key}: {file1.get(key)}\n'
+            elif key not in file1.keys() and key in file2.keys():
+                result += f'  + {key}: {file1.get(key)}\n'
+            elif key in file1.keys() and key in file2.keys():
                 result += f'  - {key}: {file1.get(key)}\n'
                 result += f'  + {key}: {file2.get(key)}\n'
-        result = '{\n' + result + '}'
-        return result
+    result = '{\n' + result + '}'
+    return result
