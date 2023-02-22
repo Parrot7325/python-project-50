@@ -20,7 +20,8 @@ def generate_diff(file_path1, file_path2):
     result = ''
     file1 = json.load(open(file_path1))
     file2 = json.load(open(file_path2))
-    keys = set(file1.keys()).union(set(file2.keys()))
+    keys = list(set(file1.keys()).union(set(file2.keys())))
+    keys.sort()
     for key in keys:
         if file1.get(key) == file2.get(key):
             result += f'    {key}: {file1.get(key)}\n'
