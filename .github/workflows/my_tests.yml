@@ -24,5 +24,4 @@ jobs:
       - name: Run linter and pytest
         run: |
           make lint
-          poetry run pytest
-          poetry run pytest-cov
+          poetry run pytest --cov
