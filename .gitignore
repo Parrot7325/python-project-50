@@ -4,3 +4,5 @@ dist/
 file1.json
 file2.json
 gendiff/starters/__pycache__/
+tests/__pycache__/test_generate_diff.cpython-39.pyc
+tests/fixtures/__pycache__/
