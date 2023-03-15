@@ -1,5 +1,7 @@
 import argparse
 import json
+import yaml
+from yaml.loader import SafeLoader
 
 
 def arguments():
@@ -16,10 +18,8 @@ def arguments():
     return args
 
 
-def generate_diff(file_path1, file_path2):
+def gen_diff_from_dicts(file1, file2):
     result = ''
-    file1 = json.load(open(file_path1))
-    file2 = json.load(open(file_path2))
     keys = list(set(file1.keys()).union(set(file2.keys())))
     keys.sort()
     for key in keys:
@@ -35,3 +35,15 @@ def generate_diff(file_path1, file_path2):
                 result += f'  + {key}: {file2.get(key)}\n'
     result = '{\n' + result + '}'
     return result
+
+def generate_diff(file_path1, file_path2):
+    file1 = json.load(open(file_path1))
+    file2 = json.load(open(file_path2))
+    return gen_diff_from_dicts(file1, file2)
+    
+
+
+def generate_diff_yaml(file_path1, file_path2):
+    file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
+    file2 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
+    
