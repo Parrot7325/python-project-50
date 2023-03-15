@@ -45,5 +45,5 @@ def generate_diff(file_path1, file_path2):
 
 def generate_diff_yaml(file_path1, file_path2):
     file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
-    file2 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
-    
+    file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
+    return gen_diff_from_dicts(file1, file2)
