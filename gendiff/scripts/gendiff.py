@@ -20,13 +20,12 @@ def arguments():
 
 def gen_base_diff(file1, file2):
     diff = {
-            'unchanged': {},
-            'only in first file': {},
-            'only in second file': {},
-            'changed': {},
-            'keys': []
-        }
-        
+        'unchanged': {},
+        'only in first file': {},
+        'only in second file': {},
+        'changed': {},
+        'keys': []
+    }
     keys = list(set(file1.keys()).union(set(file2.keys())))
     for key in keys:
         diff['keys'].append(key)
@@ -40,6 +39,8 @@ def gen_base_diff(file1, file2):
             elif key in file1.keys() and key in file2.keys():
                 diff['changed'][key] = (file1.get(key), file2.get(key))
     diff['keys'].sort()
+    print(diff['changed']['common'])
+    print(type(diff['changed']['common']))
     return diff
 
 
@@ -70,3 +71,9 @@ def generate_diff_yaml(file_path1, file_path2):
     file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
     file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
     return gen_text_diff(gen_base_diff(file1, file2))
+
+
+def recursive_generate_diff(file_path1, file_path2):
+    file1 = json.load(open(file_path1))
+    file2 = json.load(open(file_path2))
+    base_diff = gen_base_diff(file1, file2)
