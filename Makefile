@@ -21,6 +21,7 @@ lint:
 
 
 test:
+	clear
 	poetry run pytest
 
 

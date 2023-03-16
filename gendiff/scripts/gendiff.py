@@ -18,21 +18,44 @@ def arguments():
     return args
 
 
-def gen_diff_from_dicts(file1, file2):
-    result = ''
+def gen_base_diff(file1, file2):
+    diff = {
+            'unchanged': {},
+            'only in first file': {},
+            'only in second file': {},
+            'changed': {},
+            'keys': []
+        }
+        
     keys = list(set(file1.keys()).union(set(file2.keys())))
-    keys.sort()
     for key in keys:
+        diff['keys'].append(key)
         if file1.get(key) == file2.get(key):
-            result += f'    {key}: {file1.get(key)}\n'
+            diff['unchanged'][key] = file1.get(key)
         else:
             if key in file1.keys() and key not in file2.keys():
-                result += f'  - {key}: {file1.get(key)}\n'
+                diff['only in first file'][key] = file1.get(key)
             elif key not in file1.keys() and key in file2.keys():
-                result += f'  + {key}: {file2.get(key)}\n'
+                diff['only in second file'][key] = file2.get(key)
             elif key in file1.keys() and key in file2.keys():
-                result += f'  - {key}: {file1.get(key)}\n'
-                result += f'  + {key}: {file2.get(key)}\n'
+                diff['changed'][key] = (file1.get(key), file2.get(key))
+    diff['keys'].sort()
+    return diff
+
+
+def gen_text_diff(diff):
+    result = ''
+    for key in diff['keys']:
+        if key in diff['unchanged'].keys():
+            result += f'    {key}: {diff["unchanged"][key]}\n'
+        else:
+            if key in diff['only in first file'].keys():
+                result += f'  - {key}: {diff["only in first file"][key]}\n'
+            elif key in diff['only in second file'].keys():
+                result += f'  + {key}: {diff["only in second file"][key]}\n'
+            elif key in diff['changed'].keys():
+                result += f'  - {key}: {diff["changed"][key][0]}\n'
+                result += f'  + {key}: {diff["changed"][key][1]}\n'
     result = '{\n' + result + '}'
     return result
 
@@ -40,10 +63,10 @@ def gen_diff_from_dicts(file1, file2):
 def generate_diff(file_path1, file_path2):
     file1 = json.load(open(file_path1))
     file2 = json.load(open(file_path2))
-    return gen_diff_from_dicts(file1, file2)
+    return gen_text_diff(gen_base_diff(file1, file2))
 
 
 def generate_diff_yaml(file_path1, file_path2):
     file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
     file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
-    return gen_diff_from_dicts(file1, file2)
+    return gen_text_diff(gen_base_diff(file1, file2))
