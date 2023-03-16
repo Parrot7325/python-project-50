@@ -36,11 +36,11 @@ def gen_diff_from_dicts(file1, file2):
     result = '{\n' + result + '}'
     return result
 
+
 def generate_diff(file_path1, file_path2):
     file1 = json.load(open(file_path1))
     file2 = json.load(open(file_path2))
     return gen_diff_from_dicts(file1, file2)
-    
 
 
 def generate_diff_yaml(file_path1, file_path2):
