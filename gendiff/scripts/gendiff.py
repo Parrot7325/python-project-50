@@ -37,10 +37,11 @@ def gen_base_diff(file1, file2):
             elif key not in file1.keys() and key in file2.keys():
                 diff['only in second file'][key] = file2.get(key)
             elif key in file1.keys() and key in file2.keys():
-                diff['changed'][key] = (file1.get(key), file2.get(key))
+                if type(file1[key]) == dict and type(file2[key]) == dict:
+                    diff['changed'][key] = gen_base_diff(file1[key], file2[key])
+                else:
+                    diff['changed'][key] = (file1[key], file2[key])
     diff['keys'].sort()
-    print(diff['changed']['common'])
-    print(type(diff['changed']['common']))
     return diff
 
 
@@ -55,8 +56,12 @@ def gen_text_diff(diff):
             elif key in diff['only in second file'].keys():
                 result += f'  + {key}: {diff["only in second file"][key]}\n'
             elif key in diff['changed'].keys():
-                result += f'  - {key}: {diff["changed"][key][0]}\n'
-                result += f'  + {key}: {diff["changed"][key][1]}\n'
+                if type(diff['changed'][key]) == dict:
+                    result += (f'  - {key}: '
+                                '{gen_text_diff(diff["changed"][key])}\n')
+                else:
+                    result += f'  - {key}: {diff["changed"][key][0]}\n'
+                    result += f'  + {key}: {diff["changed"][key][1]}\n'
     result = '{\n' + result + '}'
     return result
 
@@ -71,9 +76,3 @@ def generate_diff_yaml(file_path1, file_path2):
     file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
     file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
     return gen_text_diff(gen_base_diff(file1, file2))
-
-
-def recursive_generate_diff(file_path1, file_path2):
-    file1 = json.load(open(file_path1))
-    file2 = json.load(open(file_path2))
-    base_diff = gen_base_diff(file1, file2)
