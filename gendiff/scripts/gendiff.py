@@ -18,6 +18,19 @@ def arguments():
     return args
 
 
+def stringify_dict(dictionary, depth=1):
+    result = f'{"{"}\n{depth * "    "}'
+    keys = list(dictionary.keys())
+    keys.sort()
+    for key in keys:
+        if type(dictionary[key]) == dict:
+            result += (f'{key}: '
+                       f'{stringify_dict(dictionary[key], depth + 1)}')
+        else:
+            result += f'{key}: {dictionary[key]}'
+        return result + f"\n{(depth - 1) * '    '}{'}'}"
+  
+
 def gen_base_diff(file1, file2):
     diff = {
         'unchanged': {},
@@ -27,8 +40,8 @@ def gen_base_diff(file1, file2):
         'keys': []
     }
     keys = list(set(file1.keys()).union(set(file2.keys())))
+    diff['keys'].extend(keys)
     for key in keys:
-        diff['keys'].append(key)
         if file1.get(key) == file2.get(key):
             diff['unchanged'][key] = file1.get(key)
         else:
@@ -57,8 +70,8 @@ def gen_text_diff(diff):
                 result += f'  + {key}: {diff["only in second file"][key]}\n'
             elif key in diff['changed'].keys():
                 if type(diff['changed'][key]) == dict:
-                    result += (f'  - {key}: '
-                                '{gen_text_diff(diff["changed"][key])}\n')
+                    result += (f'    {key}: '
+                               f'{gen_text_diff(diff["changed"][key])}\n')
                 else:
                     result += f'  - {key}: {diff["changed"][key][0]}\n'
                     result += f'  + {key}: {diff["changed"][key][1]}\n'
