@@ -18,17 +18,18 @@ def arguments():
     return args
 
 
-def stringify_dict(dictionary, depth=1):
-    result = f'{"{"}\n{depth * "    "}'
+def stringify_dict(dictionary, depth=0):
+    result = ''
     keys = list(dictionary.keys())
     keys.sort()
     for key in keys:
-        if type(dictionary[key]) == dict:
-            result += (f'{key}: '
-                       f'{stringify_dict(dictionary[key], depth + 1)}')
+        item = dictionary[key]
+        if type(item) == dict:
+            result += (f'{depth * "    "}{key}: '
+                       f'{stringify_dict(item, depth + 1)}\n')
         else:
-            result += f'{key}: {dictionary[key]}'
-        return result + f"\n{(depth - 1) * '    '}{'}'}"
+            result += f'{depth * "    "}{key}: {item}\n'
+    return f'{"{"}\n' + result + f'{(depth - 1) * "    "}{"}"}'
   
 
 def gen_base_diff(file1, file2):
