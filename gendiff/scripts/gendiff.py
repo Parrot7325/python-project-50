@@ -31,7 +31,7 @@ def stringify_dict(dictionary, depth=1):
                        f'{stringify_dict(item, depth + 1)}\n')
         else:
             result += f'{depth * "    "}{key}: {item}\n'
-    return '{\n' + result + f'{(depth - 1) * "    "}{"}"}'
+    return '{\n' + result + f'{(depth - 1) * "    "}' + '}'
 
 
 def gen_base_diff(file1, file2):
@@ -85,27 +85,6 @@ def gen_text_diff(diff, depth=1): #_recursive
                     result += f'{(depth - 1) * "    "}  + {key}: {item2}\n'
     result = '{\n' + result + f'{(depth - 1) * "    "}' + '}'
     return result
-
-
-#def gen_text_diff(diff):
-#    result = ''
-#    for key in diff['keys']:
-#        if key in diff['unchanged'].keys():
-#            result += f'    {key}: {diff["unchanged"][key]}\n'
-#        else:
-#            if key in diff['only in first file'].keys():
-#                result += f'  - {key}: {diff["only in first file"][key]}\n'
-#            elif key in diff['only in second file'].keys():
-#                result += f'  + {key}: {diff["only in second file"][key]}\n'
-#            elif key in diff['changed'].keys():
-#                if type(diff['changed'][key]) == dict:
-#                    result += (f'    {key}: '
-#                               f'{gen_text_diff(diff["changed"][key])}\n')
-#                else:
-#                    result += f'  - {key}: {diff["changed"][key][0]}\n'
-#                    result += f'  + {key}: {diff["changed"][key][1]}\n'
-#    result = '{\n' + result + '}'
-#    return result
 
 
 def generate_diff(file_path1, file_path2):
