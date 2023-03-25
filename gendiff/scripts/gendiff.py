@@ -61,7 +61,7 @@ def gen_base_diff(file1, file2):
     return diff
 
 
-def gen_text_diff(diff, depth=1):
+def gen_text_diff_tree(diff, depth=1):
     result = ''
     for key in diff['keys']:
         if key in diff['unchanged'].keys():
@@ -80,7 +80,7 @@ def gen_text_diff(diff, depth=1):
                 item = diff['changed'][key]
                 if type(item) == dict:
                     result += (f'{depth * "    "}{key}: '
-                               f'{gen_text_diff(item, depth + 1)}\n')
+                               f'{gen_text_diff_tree(item, depth + 1)}\n')
                 else:
                     item1 = stringify_dict(diff['changed'][key][0], depth + 1)
                     item2 = stringify_dict(diff['changed'][key][1], depth + 1)
@@ -90,13 +90,35 @@ def gen_text_diff(diff, depth=1):
     return result
 
 
-def generate_diff(file_path1, file_path2):
+def get_value_plain(value):
+    if type(value) == dict:
+        return '[complex value]'
+    else:
+        return value
+
+
+def gen_text_diff_plain(diff):
+    result = ''
+    for key in diff['keys']:
+        if key in diff['only in first file'].keys():
+            result += f"Property '{key}' was removed\n"
+        elif key in diff['only in second file'].keys():
+            item = diff['only in second file'][key]
+            result += (f"Property '{key}' was added with value: "
+                       f"{get_value_plain(item)}\n")
+        elif key in diff['changed'].keys():
+            was = get_value_plain(diff['changed'][key][0])
+            now = get_value_plain(diff['changed'][key][1])
+            result += f"Property '{key}' was updated. From '{was}' to '{now}'\n"
+
+
+def generate_diff(file_path1, file_path2, formater=gen_text_diff_tree):
     file1 = json.load(open(file_path1))
     file2 = json.load(open(file_path2))
-    return gen_text_diff(gen_base_diff(file1, file2))
+    return formater(gen_base_diff(file1, file2))
 
 
-def generate_diff_yaml(file_path1, file_path2):
+def generate_diff_yaml(file_path1, file_path2, formater=gen_text_diff_tree):
     file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
     file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
-    return gen_text_diff(gen_base_diff(file1, file2))
+    return formater(gen_base_diff(file1, file2))
