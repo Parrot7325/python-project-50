@@ -19,6 +19,8 @@ def arguments():
 
 
 def stringify_dict(dictionary, depth=1):
+    if type(dictionary) == bool:
+        return str(dictionary).lower()
     if type(dictionary) != dict:
         return dictionary
     result = ''
@@ -30,6 +32,8 @@ def stringify_dict(dictionary, depth=1):
             result += (f'{depth * "    "}{key}: '
                        f'{stringify_dict(item, depth + 1)}\n')
         else:
+            if type(item) == bool:
+                item = str(item).lower()
             result += f'{depth * "    "}{key}: {item}\n'
     return '{\n' + result + f'{(depth - 1) * "    "}' + '}'
 
