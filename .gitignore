@@ -4,3 +4,4 @@ dist/
 gendiff/starters/__pycache__/
 tests/__pycache__/test_generate_diff.cpython-39.pyc
 tests/fixtures/__pycache__/
+tests/__pycache__/test_generate_diff.cpython-39-pytest-7.2.1.pyc

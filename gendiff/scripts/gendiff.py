@@ -12,13 +12,15 @@ def arguments():
                                                      ' a difference.'))
     my_parser.add_argument('first_file')
     my_parser.add_argument('second_file')
-    my_parser.add_argument('-f', '--format',
+    my_parser.add_argument('-f', '--output_format',
                            help='set format of output')
     args = my_parser.parse_args()
     return args
 
 
 def stringify_dict(dictionary, depth=1):
+    if dictionary is None:
+        return 'null'
     if type(dictionary) == bool:
         return str(dictionary).lower()
     if type(dictionary) != dict:
@@ -97,32 +99,44 @@ def gen_text_diff_tree(diff, depth=1):
 def get_value_plain(value):
     if type(value) == dict:
         return '[complex value]'
+    elif type(value) == str:
+        return f"'{value}'"
     else:
-        return value
+        return stringify_dict(value)
 
 
-def gen_text_diff_plain(diff):
+def get_path_plain(previous_path, new_part):
+    new_path = f'{previous_path}.{new_part}'[1:]
+    return new_path
+
+
+def gen_text_diff_plain(diff, path=''):
     result = ''
     for key in diff['keys']:
         if key in diff['only in first file'].keys():
-            result += f"Property '{key}' was removed\n"
+            result += f"Property '{get_path_plain(path, key)}' was removed\n"
         elif key in diff['only in second file'].keys():
             item = diff['only in second file'][key]
-            result += (f"Property '{key}' was added with value: "
-                       f"{get_value_plain(item)}\n")
+            result += (f"Property '{get_path_plain(path, key)}' was added with"
+                       f" value: {get_value_plain(item)}\n")
         elif key in diff['changed'].keys():
-            was = get_value_plain(diff['changed'][key][0])
-            now = get_value_plain(diff['changed'][key][1])
-            result += f"Property '{key}' was updated. From '{was}' to '{now}'\n"
+            if type(diff['changed'][key]) == dict:
+                result += gen_text_diff_plain(diff['changed'][key],
+                                              path + f'.{key}')
+            else:
+                was = get_value_plain(diff['changed'][key][0])
+                now = get_value_plain(diff['changed'][key][1])
+                result += f"Property '{get_path_plain(path, key)}' was updated. From {was} to {now}\n"
+    return result
 
 
-def generate_diff(file_path1, file_path2, formater=gen_text_diff_tree):
+def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):
     file1 = json.load(open(file_path1))
     file2 = json.load(open(file_path2))
-    return formater(gen_base_diff(file1, file2))
+    return decorator(gen_base_diff(file1, file2))
 
 
-def generate_diff_yaml(file_path1, file_path2, formater=gen_text_diff_tree):
+def generate_diff_yaml(file_path1, file_path2, decorator=gen_text_diff_tree):
     file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
     file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
-    return formater(gen_base_diff(file1, file2))
+    return decorator(gen_base_diff(file1, file2))
