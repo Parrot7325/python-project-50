@@ -6,6 +6,8 @@ def main():
     input_format = args.first_file[len(args.first_file) - 4:]
     if args.output_format == 'plain':
         decorator = gendiff.gen_text_diff_plain
+    elif args.output_format == 'json':
+        decorator = gendiff.gen_text_diff_json
     else:
         decorator = gendiff.gen_text_diff_tree
     if input_format == 'json':

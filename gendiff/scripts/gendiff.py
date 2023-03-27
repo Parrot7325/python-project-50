@@ -126,8 +126,16 @@ def gen_text_diff_plain(diff, path=''):
             else:
                 was = get_value_plain(diff['changed'][key][0])
                 now = get_value_plain(diff['changed'][key][1])
-                result += f"Property '{get_path_plain(path, key)}' was updated. From {was} to {now}\n"
+                result += (f"Property '{get_path_plain(path, key)}' was "
+                           f"updated. From {was} to {now}\n")
     return result
+
+
+def gen_text_diff_json(diff):
+    return json.dumps(diff, indent=4)
+
+
+#def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):
 
 
 def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):
