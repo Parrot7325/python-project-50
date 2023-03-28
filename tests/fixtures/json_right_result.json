@@ -1,14 +1,35 @@
 {
+    "added": {
+        "group3": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        }
+    },
     "changed": {
         "common": {
+            "added": {
+                "follow": false,
+                "setting4": "blah blah",
+                "setting5": {
+                    "key5": "value5"
+                }
+            },
             "changed": {
                 "setting3": [
                     true,
                     null
                 ],
                 "setting6": {
+                    "added": {
+                        "ops": "vops"
+                    },
                     "changed": {
                         "doge": {
+                            "added": {},
                             "changed": {
                                 "wow": [
                                     "",
@@ -18,7 +39,6 @@
                             "keys": [
                                 "wow"
                             ],
-                            "only in second file": {},
                             "removed": {},
                             "unchanged": {}
                         }
@@ -28,9 +48,6 @@
                         "key",
                         "ops"
                     ],
-                    "only in second file": {
-                        "ops": "vops"
-                    },
                     "removed": {},
                     "unchanged": {
                         "key": "value"
@@ -46,13 +63,6 @@
                 "setting5",
                 "setting6"
             ],
-            "only in second file": {
-                "follow": false,
-                "setting4": "blah blah",
-                "setting5": {
-                    "key5": "value5"
-                }
-            },
             "removed": {
                 "setting2": 200
             },
@@ -61,6 +71,7 @@
             }
         },
         "group1": {
+            "added": {},
             "changed": {
                 "baz": [
                     "bas",
@@ -78,7 +89,6 @@
                 "foo",
                 "nest"
             ],
-            "only in second file": {},
             "removed": {},
             "unchanged": {
                 "foo": "bar"
@@ -91,16 +101,6 @@
         "group2",
         "group3"
     ],
-    "only in second file": {
-        "group3": {
-            "deep": {
-                "id": {
-                    "number": 45
-                }
-            },
-            "fee": 100500
-        }
-    },
     "removed": {
         "group2": {
             "abc": 12345,
