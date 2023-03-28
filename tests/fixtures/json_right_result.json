@@ -18,8 +18,8 @@
                             "keys": [
                                 "wow"
                             ],
-                            "only in first file": {},
                             "only in second file": {},
+                            "removed": {},
                             "unchanged": {}
                         }
                     },
@@ -28,10 +28,10 @@
                         "key",
                         "ops"
                     ],
-                    "only in first file": {},
                     "only in second file": {
                         "ops": "vops"
                     },
+                    "removed": {},
                     "unchanged": {
                         "key": "value"
                     }
@@ -46,15 +46,15 @@
                 "setting5",
                 "setting6"
             ],
-            "only in first file": {
-                "setting2": 200
-            },
             "only in second file": {
                 "follow": false,
                 "setting4": "blah blah",
                 "setting5": {
                     "key5": "value5"
                 }
+            },
+            "removed": {
+                "setting2": 200
             },
             "unchanged": {
                 "setting1": "Value 1"
@@ -78,8 +78,8 @@
                 "foo",
                 "nest"
             ],
-            "only in first file": {},
             "only in second file": {},
+            "removed": {},
             "unchanged": {
                 "foo": "bar"
             }
@@ -91,14 +91,6 @@
         "group2",
         "group3"
     ],
-    "only in first file": {
-        "group2": {
-            "abc": 12345,
-            "deep": {
-                "id": 45
-            }
-        }
-    },
     "only in second file": {
         "group3": {
             "deep": {
@@ -107,6 +99,14 @@
                 }
             },
             "fee": 100500
+        }
+    },
+    "removed": {
+        "group2": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
         }
     },
     "unchanged": {}
