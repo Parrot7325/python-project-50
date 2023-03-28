@@ -132,7 +132,8 @@ def gen_text_diff_plain(diff, path=''):
 
 
 def gen_text_diff_json(diff):
-    return json.dumps(diff, indent=4)
+    result = json.dumps(diff, sort_keys=True, indent=4)
+    return result
 
 
 #def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):

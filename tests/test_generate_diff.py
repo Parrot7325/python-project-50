@@ -53,8 +53,8 @@ def test_gen_text_diff_json():
                                            'tests/fixtures/recursive_file2.json',
                                            gendiff.gen_text_diff_json)
     different_yaml = gendiff.generate_diff_yaml('tests/fixtures/recursive_file1.yml',
-                                                   'tests/fixtures/recursive_file2.yml',
-                                                    gendiff.gen_text_diff_json)
+                                                'tests/fixtures/recursive_file2.yml',
+                                                gendiff.gen_text_diff_json)
     assert type(different_json) == str
     assert type(different_yaml) == str
     assert different_json + '\n' == right_result

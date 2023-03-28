@@ -1,5 +1,96 @@
 {
-    "unchanged": {},
+    "changed": {
+        "common": {
+            "changed": {
+                "setting3": [
+                    true,
+                    null
+                ],
+                "setting6": {
+                    "changed": {
+                        "doge": {
+                            "changed": {
+                                "wow": [
+                                    "",
+                                    "so much"
+                                ]
+                            },
+                            "keys": [
+                                "wow"
+                            ],
+                            "only in first file": {},
+                            "only in second file": {},
+                            "unchanged": {}
+                        }
+                    },
+                    "keys": [
+                        "doge",
+                        "key",
+                        "ops"
+                    ],
+                    "only in first file": {},
+                    "only in second file": {
+                        "ops": "vops"
+                    },
+                    "unchanged": {
+                        "key": "value"
+                    }
+                }
+            },
+            "keys": [
+                "follow",
+                "setting1",
+                "setting2",
+                "setting3",
+                "setting4",
+                "setting5",
+                "setting6"
+            ],
+            "only in first file": {
+                "setting2": 200
+            },
+            "only in second file": {
+                "follow": false,
+                "setting4": "blah blah",
+                "setting5": {
+                    "key5": "value5"
+                }
+            },
+            "unchanged": {
+                "setting1": "Value 1"
+            }
+        },
+        "group1": {
+            "changed": {
+                "baz": [
+                    "bas",
+                    "bars"
+                ],
+                "nest": [
+                    {
+                        "key": "value"
+                    },
+                    "str"
+                ]
+            },
+            "keys": [
+                "baz",
+                "foo",
+                "nest"
+            ],
+            "only in first file": {},
+            "only in second file": {},
+            "unchanged": {
+                "foo": "bar"
+            }
+        }
+    },
+    "keys": [
+        "common",
+        "group1",
+        "group2",
+        "group3"
+    ],
     "only in first file": {
         "group2": {
             "abc": 12345,
@@ -18,96 +109,5 @@
             "fee": 100500
         }
     },
-    "changed": {
-        "group1": {
-            "unchanged": {
-                "foo": "bar"
-            },
-            "only in first file": {},
-            "only in second file": {},
-            "changed": {
-                "baz": [
-                    "bas",
-                    "bars"
-                ],
-                "nest": [
-                    {
-                        "key": "value"
-                    },
-                    "str"
-                ]
-            },
-            "keys": [
-                "baz",
-                "foo",
-                "nest"
-            ]
-        },
-        "common": {
-            "unchanged": {
-                "setting1": "Value 1"
-            },
-            "only in first file": {
-                "setting2": 200
-            },
-            "only in second file": {
-                "setting5": {
-                    "key5": "value5"
-                },
-                "follow": false,
-                "setting4": "blah blah"
-            },
-            "changed": {
-                "setting6": {
-                    "unchanged": {
-                        "key": "value"
-                    },
-                    "only in first file": {},
-                    "only in second file": {
-                        "ops": "vops"
-                    },
-                    "changed": {
-                        "doge": {
-                            "unchanged": {},
-                            "only in first file": {},
-                            "only in second file": {},
-                            "changed": {
-                                "wow": [
-                                    "",
-                                    "so much"
-                                ]
-                            },
-                            "keys": [
-                                "wow"
-                            ]
-                        }
-                    },
-                    "keys": [
-                        "doge",
-                        "key",
-                        "ops"
-                    ]
-                },
-                "setting3": [
-                    true,
-                    null
-                ]
-            },
-            "keys": [
-                "follow",
-                "setting1",
-                "setting2",
-                "setting3",
-                "setting4",
-                "setting5",
-                "setting6"
-            ]
-        }
-    },
-    "keys": [
-        "common",
-        "group1",
-        "group2",
-        "group3"
-    ]
+    "unchanged": {}
 }
