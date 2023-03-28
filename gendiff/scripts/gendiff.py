@@ -251,10 +251,10 @@ def gen_text_diff_json(diff):
 
 
 def gen_file(file_path):
-    input_format = file_path[len(args.first_file) - 4:]
+    input_format = file_path[len(file_path) - 4:]
     if input_format == 'json':
         file = json.load(open(file_path))
-    elif input_format == 'yml' or input_format == 'yaml':
+    elif input_format == '.yml' or input_format == 'yaml':
         file = yaml.load(open(file_path).read(), Loader=SafeLoader)
     return file
 
