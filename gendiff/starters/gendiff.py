@@ -3,17 +3,13 @@ from gendiff.scripts import gendiff
 
 def main():
     args = gendiff.arguments()
-    input_format = args.first_file[len(args.first_file) - 4:]
     if args.output_format == 'plain':
         decorator = gendiff.gen_text_diff_plain
     elif args.output_format == 'json':
         decorator = gendiff.gen_text_diff_json
     else:
         decorator = gendiff.gen_text_diff_tree
-    if input_format == 'json':
-        print(gendiff.generate_diff(args.first_file, args.second_file, decorator))
-    elif input_format == 'yaml' or input_format == '.yml':
-        print(gendiff.generate_diff_yaml(args.first_file, args.second_file, decorator))
+    print(gendiff.generate_diff(args.first_file, args.second_file, decorator))
 
 
 if __name__ == '__main__':

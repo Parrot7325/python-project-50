@@ -250,16 +250,16 @@ def gen_text_diff_json(diff):
     return result
 
 
-#def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):
+def gen_file(file_path):
+    input_format = file_path[len(args.first_file) - 4:]
+    if input_format == 'json':
+        file = json.load(open(file_path))
+    elif input_format == 'yml' or input_format == 'yaml':
+        file = yaml.load(open(file_path).read(), Loader=SafeLoader)
+    return file
 
 
 def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):
-    file1 = json.load(open(file_path1))
-    file2 = json.load(open(file_path2))
-    return decorator(gen_base_diff(file1, file2))
-
-
-def generate_diff_yaml(file_path1, file_path2, decorator=gen_text_diff_tree):
-    file1 = yaml.load(open(file_path1).read(), Loader=SafeLoader)
-    file2 = yaml.load(open(file_path2).read(), Loader=SafeLoader)
+    file1 = gen_file(file_path1)
+    file2 = gen_file(file_path2)
     return decorator(gen_base_diff(file1, file2))
