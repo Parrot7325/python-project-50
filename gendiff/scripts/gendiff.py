@@ -56,6 +56,13 @@ def stringify_dict(dictionary, depth=1):
     return '{\n' + result + f'{(depth - 1) * "    "}' + '}'
 
 
+def gen_different(item1, item2):
+    if type(item1) == dict and type(item2) == dict:
+        return gen_base_diff(item1, item2)
+    else:
+        return (item1, item2)
+
+
 def gen_base_diff(dict1, dict2):
     """
     gen_base_diff(dict1, dict2)
@@ -87,16 +94,16 @@ def gen_base_diff(dict1, dict2):
     for key in keys:
         if dict1.get(key) == dict2.get(key):
             diff['unchanged'][key] = dict1.get(key)
-        else:
-            if key in dict1.keys() and key not in dict2.keys():
-                diff['removed'][key] = dict1.get(key)
-            elif key not in dict1.keys() and key in dict2.keys():
-                diff['added'][key] = dict2.get(key)
-            elif key in dict1.keys() and key in dict2.keys():
-                if type(dict1[key]) == dict and type(dict2[key]) == dict:
-                    diff['changed'][key] = gen_base_diff(dict1[key], dict2[key])
-                else:
-                    diff['changed'][key] = (dict1[key], dict2[key])
+        elif key in dict1.keys() and key not in dict2.keys():
+            diff['removed'][key] = dict1.get(key)
+        elif key not in dict1.keys() and key in dict2.keys():
+            diff['added'][key] = dict2.get(key)
+        elif key in dict1.keys() and key in dict2.keys():
+            diff['changed'][key] = gen_different(dict1[key], dict2[key])
+#            if type(dict1[key]) == dict and type(dict2[key]) == dict:
+#                diff['changed'][key] = gen_base_diff(dict1[key], dict2[key])
+#            else:
+#                diff['changed'][key] = (dict1[key], dict2[key])
     diff['keys'].sort()
     return diff
 
