@@ -186,9 +186,9 @@ def get_path_plain(previous_path, new_part):
     return new_path
 
 
-def gen_text_diff_plain(diff, path=''):
+def gen_text_diff_plain_real(diff, path=''):
     """
-    gen_text_diff_plain(diff, path='')
+    gen_text_diff_plain_real(diff, path='')
     Принимает словарь, созданный gen_base_diff. Возвращает строку с
     представлением изменений в формате plain:
 
@@ -219,7 +219,7 @@ def gen_text_diff_plain(diff, path=''):
                        f" value: {get_value_plain(item)}\n")
         elif key in diff['changed'].keys():
             if type(diff['changed'][key]) == dict:
-                result += gen_text_diff_plain(diff['changed'][key],
+                result += gen_text_diff_plain_real(diff['changed'][key],
                                               path + f'.{key}')
             else:
                 was = get_value_plain(diff['changed'][key][0])
@@ -227,6 +227,11 @@ def gen_text_diff_plain(diff, path=''):
                 result += (f"Property '{get_path_plain(path, key)}' was "
                            f"updated. From {was} to {now}\n")
     return result
+
+
+def gen_text_diff_plain(diff):
+    plain_diff = gen_text_diff_plain_real(diff)
+    return plain_diff[:len(plain_diff) - 1]
 
 
 def gen_text_diff_json(diff):

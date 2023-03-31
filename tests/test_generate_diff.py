@@ -35,8 +35,8 @@ def test_gen_text_diff_plain():
                                             gendiff.gen_text_diff_plain)
     assert type(different1) == str
     assert type(different2) == str
-    assert different1 == right_result
-    assert different2 == right_result
+    assert different1 + '\n' == right_result
+    assert different2 + '\n' == right_result
 
 
 def test_gen_text_diff_json():
