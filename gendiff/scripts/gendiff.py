@@ -22,6 +22,15 @@ def arguments():
     return args
 
 
+def stringify_not_dict(data):
+    if data is None:
+        return 'null'
+    elif type(data) == bool:
+        return str(data).lower()
+    else:
+        return data
+
+
 def stringify_dict(dictionary, depth=1):
     """
     stringify_dict(dictionary, depth=1)
@@ -29,10 +38,7 @@ def stringify_dict(dictionary, depth=1):
     отображением исходного словаря.
     Значения приводятся к стандарту json (None -> null, True -> true и т.д.)
     """
-    if dictionary is None:
-        return 'null'
-    if type(dictionary) == bool:
-        return str(dictionary).lower()
+    dictionary = stringify_not_dict(dictionary)
     if type(dictionary) != dict:
         return dictionary
     result = ''
@@ -220,7 +226,7 @@ def gen_text_diff_plain_real(diff, path=''):
         elif key in diff['changed'].keys():
             if type(diff['changed'][key]) == dict:
                 result += gen_text_diff_plain_real(diff['changed'][key],
-                                              path + f'.{key}')
+                                                   path + f'.{key}')
             else:
                 was = get_value_plain(diff['changed'][key][0])
                 now = get_value_plain(diff['changed'][key][1])
