@@ -100,12 +100,21 @@ def gen_base_diff(dict1, dict2):
             diff['added'][key] = dict2.get(key)
         elif key in dict1.keys() and key in dict2.keys():
             diff['changed'][key] = gen_different(dict1[key], dict2[key])
-#            if type(dict1[key]) == dict and type(dict2[key]) == dict:
-#                diff['changed'][key] = gen_base_diff(dict1[key], dict2[key])
-#            else:
-#                diff['changed'][key] = (dict1[key], dict2[key])
     diff['keys'].sort()
     return diff
+
+
+def gen_tree_changed(item, key, depth):
+    result = ''
+    if type(item) == dict:
+        result += (f'{depth * "    "}{key}: '
+                   f'{gen_text_diff_tree(item, depth + 1)}\n')
+    else:
+        item1 = stringify_dict(item[0], depth + 1)
+        item2 = stringify_dict(item[1], depth + 1)
+        result += f'{(depth - 1) * "    "}  - {key}: {item1}\n'
+        result += f'{(depth - 1) * "    "}  + {key}: {item2}\n'
+    return result
 
 
 def gen_text_diff_tree(diff, depth=1):
@@ -151,25 +160,15 @@ def gen_text_diff_tree(diff, depth=1):
         if key in diff['unchanged'].keys():
             item = stringify_dict(diff["unchanged"][key], depth + 1)
             result += f'{depth * "    "}{key}: {item}\n'
-        else:
-            if key in diff['removed'].keys():
-                item = stringify_dict(diff["removed"][key],
-                                      depth + 1)
-                result += f'{(depth - 1) * "    "}  - {key}: {item}\n'
-            elif key in diff['added'].keys():
-                item = stringify_dict(diff["added"][key],
-                                      depth + 1)
-                result += f'{(depth - 1) * "    "}  + {key}: {item}\n'
-            elif key in diff['changed'].keys():
-                item = diff['changed'][key]
-                if type(item) == dict:
-                    result += (f'{depth * "    "}{key}: '
-                               f'{gen_text_diff_tree(item, depth + 1)}\n')
-                else:
-                    item1 = stringify_dict(diff['changed'][key][0], depth + 1)
-                    item2 = stringify_dict(diff['changed'][key][1], depth + 1)
-                    result += f'{(depth - 1) * "    "}  - {key}: {item1}\n'
-                    result += f'{(depth - 1) * "    "}  + {key}: {item2}\n'
+        elif key in diff['removed'].keys():
+            item = stringify_dict(diff["removed"][key], depth + 1)
+            result += f'{(depth - 1) * "    "}  - {key}: {item}\n'
+        elif key in diff['added'].keys():
+            item = stringify_dict(diff["added"][key], depth + 1)
+            result += f'{(depth - 1) * "    "}  + {key}: {item}\n'
+        elif key in diff['changed'].keys():
+            item = diff['changed'][key]
+            result += gen_tree_changed(item, key, depth)
     result = '{\n' + result + f'{(depth - 1) * "    "}' + '}'
     return result
 
