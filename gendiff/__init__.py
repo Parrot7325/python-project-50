@@ -1,1 +1,4 @@
-generate_diff = gendiff.scripts.gendiff.generate_diff
+from gendiff.scripts import gendiff
+
+
+generate_diff = gendiff.generate_diff
