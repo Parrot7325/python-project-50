@@ -108,7 +108,7 @@ def gen_tree_changed(item, key, depth):
     result = ''
     if type(item) == dict:
         result += (f'{depth * "    "}{key}: '
-                   f'{gen_text_diff_tree(item, depth + 1)}\n')
+                   f'{stylish(item, depth + 1)}\n')
     else:
         item1 = stringify_dict(item[0], depth + 1)
         item2 = stringify_dict(item[1], depth + 1)
@@ -117,7 +117,7 @@ def gen_tree_changed(item, key, depth):
     return result
 
 
-def gen_text_diff_tree(diff, depth=1):
+def stylish(diff, depth=1):
     """
     gen_text_diff_tree(diff, depth=1)
     Принимает словарь, созданный gen_base_diff. Возвращает строку с
@@ -276,7 +276,7 @@ def gen_file(file_path):
     return file
 
 
-def generate_diff(file_path1, file_path2, decorator=gen_text_diff_tree):
+def generate_diff(file_path1, file_path2, decorator=stylish):
     file1 = gen_file(file_path1)
     file2 = gen_file(file_path2)
     return decorator(gen_base_diff(file1, file2))

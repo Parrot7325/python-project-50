@@ -8,7 +8,7 @@ def main():
     elif args.output_format == 'json':
         decorator = gendiff.gen_text_diff_json
     else:
-        decorator = gendiff.gen_text_diff_tree
+        decorator = gendiff.stylish
     print(gendiff.generate_diff(args.first_file, args.second_file, decorator))
 
 
