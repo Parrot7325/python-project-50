@@ -277,6 +277,12 @@ def gen_file(file_path):
 
 
 def generate_diff(file_path1, file_path2, decorator=stylish):
+    if decorator == 'stylish':
+        decorator = stylish
+    elif decorator == 'plain':
+        decorator = gen_text_diff_plain
+    elif decorator == 'json':
+        decorator = gen_text_diff_json
     file1 = gen_file(file_path1)
     file2 = gen_file(file_path2)
     return decorator(gen_base_diff(file1, file2))
