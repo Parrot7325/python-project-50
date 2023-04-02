@@ -31,8 +31,8 @@ def test_gen_text_diff_plain():
                                        'tests/fixtures/recursive_file2.json',
                                        gendiff.gen_text_diff_plain)
     different2 = gendiff.generate_diff('tests/fixtures/recursive_file1.json',
-                                        'tests/fixtures/recursive_file2.yml',
-                                        gendiff.gen_text_diff_plain)
+                                       'tests/fixtures/recursive_file2.yml',
+                                       gendiff.gen_text_diff_plain)
     assert type(different1) == str
     assert type(different2) == str
     assert different1 + '\n' == right_result
