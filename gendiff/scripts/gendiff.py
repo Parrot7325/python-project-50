@@ -81,7 +81,7 @@ def gen_file(file_path):
 
 
 def generate_diff(file_path1, file_path2, decorator='stylish'):
-    if decorator == 'stylish' or decorator == '':
+    if decorator == 'stylish' or not decorator:
         decorator = formaters.stylish.stylish
     elif decorator == 'plain':
         decorator = formaters.plain.gen_text_diff_plain
