@@ -5,8 +5,10 @@ description = "Второй учебный проект в курсе Хексл
 authors = ["Parrot7325 <maximus1997@yahoo.com>"]
 readme = "README.md"
 packages = [
-#  {include = "hexlet_code"},
    {include = "gendiff"}]
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only"
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
