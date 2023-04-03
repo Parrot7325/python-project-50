@@ -87,6 +87,8 @@ def generate_diff(file_path1, file_path2, decorator='stylish'):
         decorator = formaters.plain.gen_text_diff_plain
     elif decorator == 'json':
         decorator = formaters.json.gen_text_diff_json
+    else:
+        return 'Error! Wrong output format'
     file1 = gen_file(file_path1)
     file2 = gen_file(file_path2)
     return decorator(gen_base_diff(file1, file2))
