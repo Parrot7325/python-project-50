@@ -7,3 +7,4 @@ tests/fixtures/__pycache__/
 tests/__pycache__/test_generate_diff.cpython-39-pytest-7.2.1.pyc
 tests/__pycache__/test_generate_diff.cpython-39-pytest-7.2.1.pyc
 gendiff/__pycache__/
+gendiff/formaters/__pycache__/
