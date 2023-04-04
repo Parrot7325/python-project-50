@@ -13,12 +13,15 @@ def test_generate_diff(file1, file2):
     assert different + '\n' == right_result
 
 
-@pytest.mark.parametrize("file1,file2", [
+parametrizer = pytest.mark.parametrize("file1,file2", [
     ('tests/fixtures/recursive_file1.json',
      'tests/fixtures/recursive_file2.yml'),
     ('tests/fixtures/recursive_file1.yml',
      'tests/fixtures/recursive_file2.json')
 ])
+
+
+@parametrizer()
 def test_recursive_generate_diff(file1, file2):
     right_result = open('tests/fixtures/recursive_right_result.json').read()
     different = generate_diff(file1, file2)
@@ -26,12 +29,7 @@ def test_recursive_generate_diff(file1, file2):
     assert different + '\n' == right_result
 
 
-@pytest.mark.parametrize("file1,file2", [
-    ('tests/fixtures/recursive_file1.json',
-     'tests/fixtures/recursive_file2.yml'),
-    ('tests/fixtures/recursive_file1.yml',
-     'tests/fixtures/recursive_file2.json')
-])
+@parametrizer()
 def test_gen_text_diff_plain(file1, file2):
     right_result = open('tests/fixtures/plain_right_result.json').read()
     different = generate_diff(file1, file2, 'plain')
@@ -39,12 +37,7 @@ def test_gen_text_diff_plain(file1, file2):
     assert different + '\n' == right_result
 
 
-@pytest.mark.parametrize("file1,file2", [
-    ('tests/fixtures/recursive_file1.json',
-     'tests/fixtures/recursive_file2.yml'),
-    ('tests/fixtures/recursive_file1.yml',
-     'tests/fixtures/recursive_file2.json')
-])
+@parametrizer()
 def test_gen_text_diff_json(file1, file2):
     right_result = open('tests/fixtures/json_right_result.json').read()
     different = generate_diff(file1, file2, 'json')
