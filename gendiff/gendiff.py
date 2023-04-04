@@ -1,8 +1,6 @@
 import argparse
-import json
-import yaml
-from yaml.loader import SafeLoader
 from gendiff import formaters
+from gendiff.gen_file import gen_file
 
 
 def arguments():
@@ -71,15 +69,6 @@ def gen_base_diff(dict1, dict2):
     return diff
 
 
-def gen_file(file_path):
-    input_format = file_path[len(file_path) - 4:]
-    if input_format == 'json':
-        file = json.load(open(file_path))
-    elif input_format == '.yml' or input_format == 'yaml':
-        file = yaml.load(open(file_path).read(), Loader=SafeLoader)
-    return file
-
-
 def generate_diff(file_path1, file_path2, decorator='stylish'):
     if decorator == 'stylish' or not decorator:
         decorator = formaters.stylish.stylish
@@ -88,7 +77,7 @@ def generate_diff(file_path1, file_path2, decorator='stylish'):
     elif decorator == 'json':
         decorator = formaters.json.gen_text_diff_json
     else:
-        return 'Error! Wrong output format'
+        raise Exception('Error! Wrong output format')
     file1 = gen_file(file_path1)
     file2 = gen_file(file_path2)
     return decorator(gen_base_diff(file1, file2))
