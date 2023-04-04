@@ -1,5 +1,4 @@
 import argparse
-from gendiff import formaters
 from gendiff.gen_file import gen_file
 from gendiff.gen_decorator import gen_decorator
 
