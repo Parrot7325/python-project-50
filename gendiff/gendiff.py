@@ -1,5 +1,5 @@
 import argparse
-from gendiff.gen_file import gen_file
+from gendiff.generate_file import generate_file
 from gendiff.gen_decorator import gen_decorator
 
 
@@ -71,6 +71,6 @@ def gen_base_diff(dict1, dict2):
 
 def generate_diff(file_path1, file_path2, output_format='stylish'):
     decorator = gen_decorator(output_format)
-    file1 = gen_file(file_path1)
-    file2 = gen_file(file_path2)
+    file1 = generate_file(file_path1)
+    file2 = generate_file(file_path2)
     return decorator(gen_base_diff(file1, file2))
