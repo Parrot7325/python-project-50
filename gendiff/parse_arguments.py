@@ -16,4 +16,4 @@ def arguments():
     my_parser.add_argument('-f', '--output_format',
                            help='set format of output')
     args = my_parser.parse_args()
-    return argsimport argparse
+    return args
