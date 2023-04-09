@@ -1,7 +1,7 @@
 from gendiff import formaters
 
 
-def gen_decorator(decorator):
+def get_decorator(decorator):
     if decorator == 'stylish' or not decorator:
         decorator = formaters.stylish.stylish
     elif decorator == 'plain':

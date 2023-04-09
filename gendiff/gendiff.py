@@ -1,5 +1,5 @@
 from gendiff.generate_file import generate_file
-from gendiff.gen_decorator import gen_decorator
+from gendiff.get_decorator import get_decorator
 
 
 def gen_different(item1, item2):
@@ -51,7 +51,7 @@ def gen_base_diff(dict1, dict2):
 
 
 def generate_diff(file_path1, file_path2, output_format='stylish'):
-    decorator = gen_decorator(output_format)
+    decorator = get_decorator(output_format)
     file1 = generate_file(file_path1)
     file2 = generate_file(file_path2)
     return decorator(gen_base_diff(file1, file2))
