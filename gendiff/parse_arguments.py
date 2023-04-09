@@ -1,7 +1,7 @@
 import argparse
 
 
-def arguments():
+def parse_arguments():
     """
     arguments
     Принимает и парсит аргументы командной строки.
